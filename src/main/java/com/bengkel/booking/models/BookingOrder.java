@@ -12,13 +12,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookingOrder implements IBengkelPayment{
+	private static int idNum = 1;
 	private String bookingId;
 	private Customer customer;
 	private List<ItemService> services;
 	private String paymentMethod;
 	private double totalServicePrice;
 	private double totalPayment;
-	
+
+	public BookingOrder(Customer customer, List<ItemService> services, String paymentMethod, double totalServicePrice) {
+		this.customer = customer;
+		this.services = services;
+		this.paymentMethod = paymentMethod;
+		this.totalServicePrice = totalServicePrice;
+		this.bookingId = generateBookingId();
+		calculatePayment();
+	}
+
 	@Override
 	public void calculatePayment() {
 		double discount = 0;
@@ -31,5 +41,18 @@ public class BookingOrder implements IBengkelPayment{
 		setTotalPayment(getTotalServicePrice() - discount);
 	}
 
-	
+	public String generateBookingId(){
+		String bookingIdTemp = "";
+		if(idNum < 10){
+			bookingIdTemp = "Book-" + getCustomer().getCustomerId() + "00" + idNum;
+		}
+		else if(idNum < 100){
+			bookingIdTemp = "Book-" + getCustomer().getCustomerId() + "0" + idNum;
+		}
+		else{
+			bookingIdTemp = "Book-" + getCustomer().getCustomerId() + idNum;
+		}
+		idNum++;
+		return bookingIdTemp;
+	} 
 }

@@ -13,5 +13,8 @@ public class ItemService {
 	private String vehicleType;
 	private double price;
 	
-	
+	@Override
+	public String toString() {
+		return serviceName;
+	}
 }

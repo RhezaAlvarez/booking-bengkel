@@ -2,7 +2,9 @@ package com.bengkel.booking.services;
 
 import java.util.List;
 
+import com.bengkel.booking.models.BookingOrder;
 import com.bengkel.booking.models.Car;
+import com.bengkel.booking.models.ItemService;
 import com.bengkel.booking.models.Vehicle;
 
 public class PrintService {
@@ -45,6 +47,38 @@ public class PrintService {
 	    	number++;
 	    }
 	    System.out.printf(line);
+	}
+
+	public static void showServices(List<ItemService> listAllItemService, String vehicleType){
+		int num = 1;
+		System.out.println("+================================================================================================+");
+		System.out.printf("| %-2s | %-15s | %-25s | %-15s | %-15s |\n", "No", "Service Id", "Nama Service", "Tipe Kendaraan", "Harga");
+		System.out.println("+================================================================================================+");
+		for (ItemService itemService : listAllItemService) {
+			if(itemService.getVehicleType().equals(vehicleType)){
+				System.out.printf("| %2s | %-15s | %-25s | %-15s | %15s |\n", num, itemService.getServiceId(), itemService.getServiceName(), itemService.getVehicleType(), itemService.getPrice());
+				num++;
+			}
+		}
+		System.out.printf("| %2s | %-69s |\n", 0, "Kembali Ke Home Menu");
+		System.out.println("+================================================================================================+");
+	}
+
+	public static void showBookingOrder(List<BookingOrder> listBookingOrder, String customerId){
+		int num=1;
+		System.out.println("Booking Order Menu");
+		System.out.println("+================================================================================================+");
+		System.out.printf("| %-2s | %-25s | %-15s | %-15s | %-15s | %-15s | %-30s |\n", "No", "Booking Id", "Nama Customer", "Payment Method", "Total Service", "Total Payment", "List Service");
+		System.out.println("+================================================================================================+");
+		for (BookingOrder bookingOrder : listBookingOrder) {
+			if(bookingOrder.getCustomer().getCustomerId().equals(customerId)){
+				System.out.printf("| %2s | %-25s | %-15s | %-15s | %-15s | %-15s | %-30s |\n", 
+					num, bookingOrder.getBookingId(), bookingOrder.getCustomer().getName(), bookingOrder.getPaymentMethod(), bookingOrder.getTotalServicePrice(), bookingOrder.getTotalPayment(), bookingOrder.getServices());
+				num++;
+			}
+		}
+		System.out.printf("| %2s | %-69s |\n", 0, "Kembali Ke Home Menu");
+		System.out.println("+================================================================================================+");
 	}
 	
 	//Silahkan Tambahkan function print sesuai dengan kebutuhan.
